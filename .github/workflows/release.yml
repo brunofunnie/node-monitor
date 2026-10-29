@@ -50,6 +50,7 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run -a npx electron scripts/screenshot.js "$RUNNER_TEMP/node-monitor-screenshot.png" --no-sandbox
       - name: Attach screenshot to the screenshots issue
+        continue-on-error: true
         if: runner.os == 'Linux' && startsWith(github.ref, 'refs/tags/')
         env:
           GH_TOKEN: ${{ github.token }}
