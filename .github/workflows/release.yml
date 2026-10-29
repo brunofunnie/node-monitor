@@ -24,6 +24,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npx electron-builder ${{ matrix.target }} --publish never
+      - name: Capture English screenshot with demo data
+        if: runner.os == 'Linux'
+        run: xvfb-run -a npx electron scripts/screenshot.js "$RUNNER_TEMP/node-monitor-screenshot.png" --no-sandbox
       - uses: actions/upload-artifact@v4
         with:
           name: node-monitor-${{ matrix.os }}
@@ -36,4 +39,5 @@ jobs:
           files: |
             dist/*.AppImage
             dist/*.exe
+            ${{ runner.temp }}/node-monitor-screenshot.png
           generate_release_notes: true

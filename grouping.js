@@ -1,6 +1,6 @@
 function processName(p) {
   if (p.harness) return p.harness;
-  if (p.isNode === false) return p.name || p.executable?.split('/').pop() || 'Processo';
+  if (p.isNode === false) return p.name || p.executable?.split('/').pop() || 'Process';
   return p.cwd?.split('/').filter(Boolean).pop() || p.command?.[1]?.split('/').pop() || 'Node.js';
 }
 function sortByPort(processes) {

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, dialog } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
+const { translate } = require('./i18n');
 const { setupTrayBehavior } = require('./tray');
 const { getAutostart, setAutostart, migrateAutostart } = require('./autostart');
 let tray;
@@ -30,11 +31,13 @@ app.whenReady().then(async () => {
     const behavior = setupTrayBehavior(window, tray, app, fs.existsSync(noticeFile), () => {
       try { fs.mkdirSync(path.dirname(noticeFile), { recursive: true }); fs.writeFileSync(noticeFile, '1'); } catch (error) { console.error('Não foi possível salvar o aviso da bandeja:', error.message); }
     });
-    tray.setContextMenu(Menu.buildFromTemplate([{ label: 'Abrir Node Monitor', click: behavior.show }, { type: 'separator' }, { label: 'Sair', click: behavior.quit }]));
+    const setTrayLanguage = language => tray.setContextMenu(Menu.buildFromTemplate([{ label: translate(language, 'open'), click: behavior.show }, { type: 'separator' }, { label: translate(language, 'quit'), click: behavior.quit }]));
+    setTrayLanguage('en');
+    ipcMain.on('app:language', (event, language) => { if (event.sender === window.webContents) setTrayLanguage(language); });
     ipcMain.on('window:tray-acknowledge', event => { if (event.sender === window.webContents) behavior.acknowledge(); });
   } catch (error) {
     console.error('Bandeja indisponível:', error.message);
-    dialog.showErrorBox('Bandeja indisponível', 'Não foi possível acessar a bandeja do sistema. Ao fechar, o aplicativo será encerrado.');
+    dialog.showErrorBox(translate('en', 'trayUnavailable'), translate('en', 'trayUnavailableHelp'));
   }
   window.loadFile('index.html');
   ipcMain.on('window:minimize', () => window.minimize());

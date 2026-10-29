@@ -1,41 +1,40 @@
-# Node Monitor
+<p align="center"><img src="assets/readme-banner.png" alt="Node Monitor — Processes and ports, in focus."></p>
 
-Seus processos Node.js e portas TCP, em uma janela só. Encontre o que está rodando, descubra quem está usando uma porta e encerre processos com confirmação.
+<p align="center">A small desktop app for finding Node.js processes and the ports they use.</p>
 
-## Instalação
+<p align="center"><a href="https://github.com/brunofunnie/node-monitor/releases/latest"><strong>Download for Linux or Windows</strong></a></p>
 
-Baixe a versão para **Linux** ou **Windows** na página de [releases](https://github.com/brunofunnie/node-monitor/releases). No Linux, torne o AppImage executável (`chmod +x *.AppImage`) e abra-o. No Windows, execute o instalador.
+## Get started
 
-## Desenvolvimento
+Download the latest release for **Linux** or **Windows**. On Linux, make the AppImage executable and open it:
 
-Instale o Node.js (versão 22 ou superior) e execute:
+```sh
+chmod +x *.AppImage
+./Node.Monitor-*.AppImage
+```
+
+On Windows, run the installer. Future releases include a screenshot made with fictional data.
+
+## Development
+
+Install Node.js 22 or later, then run:
 
 ```sh
 npm ci
 npm start
 ```
 
-Para rodar os testes:
+Run the tests with `npm test`. To build a package for your current platform, run `npm run dist`.
 
-```sh
-npm test
-```
+## Features
 
-Para gerar um pacote no sistema atual:
+- Find processes by name, PID, command, or port. Press `/` to focus the search.
+- See Node processes, resident memory, parent processes, and listening TCP ports. The list refreshes every five seconds.
+- Explore listening TCP ports from all processes; only Node processes can be stopped from the app.
+- Recognize MCP commands and selected AI harnesses, including Claude Code, Codex, and Gemini CLI.
+- Group processes by directory, stop a group with confirmation, and keep the app in the system tray.
+- Choose English, Portuguese, or Spanish, and enable extra details or launch at login in settings.
 
-```sh
-npm run dist
-```
+On Windows, other processes' working directories are unavailable, so they cannot be grouped by directory. System permissions may limit available information or prevent stopping a process. Stopping a process does not automatically stop its children; on Linux, it sends SIGTERM. UDP ports are not shown.
 
-## O que você pode fazer
-
-- Buscar por processo, PID, comando ou porta; pressione `/` para focar a busca.
-- Ver processos Node, memória residente, portas TCP em escuta e processos pais. A lista é atualizada a cada cinco segundos.
-- Consultar todas as portas TCP em escuta na aba **Portas**; somente processos Node podem ser encerrados.
-- Identificar comandos MCP e alguns harnesses de IA, incluindo Claude Code, Codex e Gemini CLI. A identificação depende dos caminhos e comandos reconhecidos.
-- Agrupar processos por diretório, encerrar um grupo com confirmação e manter o aplicativo na bandeja do sistema.
-- Ativar detalhes adicionais e inicialização automática nas configurações.
-
-No Windows, o diretório de trabalho de outros processos não está disponível e, por isso, eles não são agrupados por diretório. Permissões do sistema podem limitar as informações ou impedir o encerramento. O encerramento não inclui automaticamente processos filhos; no Linux ele envia SIGTERM. Portas UDP não são exibidas.
-
-Os ícones dos harnesses são carregados da internet; os nomes continuam disponíveis sem conexão.
+Harness recognition depends on known paths and commands. Harness icons are loaded from the internet; their names remain visible offline.
