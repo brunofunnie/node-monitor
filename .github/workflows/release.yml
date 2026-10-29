@@ -38,6 +38,14 @@ jobs:
           executable=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$bundle/Contents/Info.plist")
           test -x "$bundle/Contents/MacOS/$executable"
           file "$bundle/Contents/MacOS/$executable"
+          dmg=$(find dist -maxdepth 1 -name '*.dmg' -print -quit)
+          test -n "$dmg"
+          mountpoint=$(mktemp -d)
+          hdiutil attach "$dmg" -readonly -nobrowse -mountpoint "$mountpoint"
+          trap 'hdiutil detach "$mountpoint"' EXIT
+          app="$mountpoint/Node Monitor.app"
+          executable=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Contents/Info.plist")
+          test -x "$app/Contents/MacOS/$executable"
       - name: Capture English screenshot with demo data
         if: runner.os == 'Linux'
         run: xvfb-run -a npx electron scripts/screenshot.js "$RUNNER_TEMP/node-monitor-screenshot.png" --no-sandbox
