@@ -45,10 +45,10 @@ app.whenReady().then(async () => {
   ipcMain.handle('system:home', () => app.getPath('home'));
   const autostartFile = path.join(configDir, 'autostart', 'node-monitor.desktop');
   try { if (process.platform === 'linux') await migrateAutostart(path.join(configDir, 'autostart', 'node-manager.desktop'), autostartFile); } catch (error) { console.error('Não foi possível migrar a inicialização:', error.message); }
-  ipcMain.handle('autostart:get', () => process.platform === 'win32' ? app.getLoginItemSettings().openAtLogin : getAutostart(autostartFile));
+  ipcMain.handle('autostart:get', () => process.platform !== 'linux' ? app.getLoginItemSettings().openAtLogin : getAutostart(autostartFile));
   ipcMain.handle('autostart:set', (_event, enabled) => {
     if (typeof enabled !== 'boolean') throw new Error('Opção de inicialização inválida.');
-    if (process.platform === 'win32') { app.setLoginItemSettings({ openAtLogin: enabled, path: process.execPath, args: app.isPackaged ? [] : [app.getAppPath()] }); return; }
+    if (process.platform !== 'linux') { app.setLoginItemSettings({ openAtLogin: enabled, path: process.execPath, args: app.isPackaged ? [] : [app.getAppPath()] }); return; }
     return setAutostart(autostartFile, enabled, process.execPath, app.isPackaged ? undefined : app.getAppPath());
   });
   ipcMain.handle('processes:list', (_event, mode) => listProcesses(mode === 'ports' ? 'ports' : 'node'));

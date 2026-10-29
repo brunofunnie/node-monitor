@@ -56,6 +56,7 @@ function parseSockets(table) {
   return sockets;
 }
 async function listProcesses(mode = 'node') {
+  if (process.platform === 'darwin') return require('./macos-processes').macProcesses(mode);
   if (process.platform === 'win32') return require('./windows-processes').listWindowsProcesses(mode);
   if (process.platform !== 'linux') throw new Error('Sistema operacional não suportado.');
   const entries = await fs.readdir('/proc');
@@ -77,7 +78,7 @@ async function listProcesses(mode = 'node') {
 }
 async function stopProcess(pid, startTime) {
   if (!Number.isSafeInteger(pid) || pid <= 1 || pid === process.pid || typeof startTime !== 'string') throw new Error('Processo inválido.');
-  const current = process.platform === 'win32' ? await require('./windows-processes').windowsProcess(pid) : await info(pid);
+  const current = process.platform === 'win32' ? await require('./windows-processes').windowsProcess(pid) : process.platform === 'darwin' ? (await require('./macos-processes').macProcesses('node', pid))[0] : await info(pid);
   if (!current || current.startTime !== startTime || !(process.platform === 'win32' ? /^node\.exe$/i.test(current.executable.split('/').pop()) : /^(node|nodejs)$/.test(path.basename(current.executable)))) throw new Error('O processo mudou ou já foi encerrado.');
   process.kill(pid, 'SIGTERM');
 }

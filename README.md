@@ -2,7 +2,7 @@
 
 <p align="center">A small desktop app for finding Node.js processes and the ports they use.</p>
 
-<p align="center"><a href="https://github.com/brunofunnie/node-monitor/releases/latest"><strong>Download for Linux or Windows</strong></a></p>
+<p align="center"><a href="https://github.com/brunofunnie/node-monitor/releases/latest"><strong>Download for Linux, macOS or Windows</strong></a></p>
 
 ## Screenshot
 
@@ -10,14 +10,16 @@
 
 ## Get started
 
-Download the latest release for **Linux** or **Windows**. On Linux, make the AppImage executable and open it:
+Download the latest release for **Linux**, **macOS** or **Windows**. On Linux, make the AppImage executable and open it:
 
 ```sh
 chmod +x *.AppImage
 ./Node.Monitor-*.AppImage
 ```
 
-On Windows, run the installer.
+On Windows, run the installer. On macOS, open the DMG and drag Node Monitor into Applications. Choose the build for Apple silicon or Intel.
+
+The macOS builds are not signed with an Apple Developer ID or notarized. Gatekeeper may block them; review the app in System Settings → Privacy & Security before choosing to open it.
 
 ## Development
 
