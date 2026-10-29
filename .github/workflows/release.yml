@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  issues: write
 jobs:
   build:
     strategy:
@@ -27,6 +28,11 @@ jobs:
       - name: Capture English screenshot with demo data
         if: runner.os == 'Linux'
         run: xvfb-run -a npx electron scripts/screenshot.js "$RUNNER_TEMP/node-monitor-screenshot.png" --no-sandbox
+      - name: Attach screenshot to the screenshots issue
+        if: runner.os == 'Linux' && startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment 1 --repo "$GITHUB_REPOSITORY" --body "Screenshot for $GITHUB_REF_NAME with fictional data." --attach "$RUNNER_TEMP/node-monitor-screenshot.png#Node Monitor with fictional processes"
       - uses: actions/upload-artifact@v4
         with:
           name: node-monitor-${{ matrix.os }}
@@ -39,5 +45,4 @@ jobs:
           files: |
             dist/*.AppImage
             dist/*.exe
-            ${{ runner.temp }}/node-monitor-screenshot.png
           generate_release_notes: true

@@ -4,6 +4,10 @@
 
 <p align="center"><a href="https://github.com/brunofunnie/node-monitor/releases/latest"><strong>Download for Linux or Windows</strong></a></p>
 
+## Screenshot
+
+<p align="center"><img src="https://github.com/user-attachments/assets/344ad90f-47d5-4360-8cfd-0fc3847d6f52" alt="Node Monitor showing fictional processes and ports" width="520"></p>
+
 ## Get started
 
 Download the latest release for **Linux** or **Windows**. On Linux, make the AppImage executable and open it:
@@ -13,7 +17,7 @@ chmod +x *.AppImage
 ./Node.Monitor-*.AppImage
 ```
 
-On Windows, run the installer. Future releases include a screenshot made with fictional data.
+On Windows, run the installer.
 
 ## Development
 
