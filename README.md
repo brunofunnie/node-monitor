@@ -4,7 +4,7 @@ Seus processos Node.js e portas TCP, em uma janela só. Encontre o que está rod
 
 ## Instalação
 
-Baixe a versão para **Linux** ou **Windows** na página de [releases](https://github.com/brunofunnie/node-monitor/releases). No Linux, torne o AppImage executável (`chmod +x "Node Monitor-"*.AppImage`) e abra-o. No Windows, execute o instalador.
+Baixe a versão para **Linux** ou **Windows** na página de [releases](https://github.com/brunofunnie/node-monitor/releases). No Linux, torne o AppImage executável (`chmod +x *.AppImage`) e abra-o. No Windows, execute o instalador.
 
 ## Desenvolvimento
 
